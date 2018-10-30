@@ -6,8 +6,7 @@ public class CannonController : MonoBehaviour {
 
     //zmiana kata nachylanie lufy
     public Transform cannon; //chodzi o podstawe wieżyczki
-    public Transform shotPoint;
-    public TankControler tank;
+    public TankController tank;
     //zakres wartosci
     private float minAngle = -15f;
     private float maxAngle = 45f;
@@ -20,7 +19,7 @@ public class CannonController : MonoBehaviour {
     private void Start()
     {
         cannon.transform.rotation = Quaternion.Euler(0,0,angle); //wyjsciowe ustawienie działka
-        tank = GetComponent<TankControler>();
+        tank = GetComponent<TankController>();
     }
 
     private void Update()
