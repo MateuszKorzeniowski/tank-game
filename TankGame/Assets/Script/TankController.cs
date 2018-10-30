@@ -4,23 +4,43 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class TankControler : MonoBehaviour {
+public class TankController : MonoBehaviour {
 
     //move
     public float speed;
     private float moveDirection;
     public bool isFacingRight = true;
+    private bool isGas = true;
 
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
+    private HUDController hud;
 
     void Update ()
     {
         moveDirection = Input.GetAxisRaw("Horizontal");
+        rb = GetComponent<Rigidbody2D>();
+        hud = FindObjectOfType<HUDController>();
+
+        if(hud._gas <= 0f)
+        {
+            isGas = false;
+        }
 	}
     private void FixedUpdate()
     {
-        rb.velocity = Vector2.right * speed * moveDirection * Time.fixedDeltaTime;
-        Flip();
+        if (isGas)
+        {
+            rb.velocity = Vector2.right * speed * moveDirection * Time.fixedDeltaTime;
+            Flip();
+            if (moveDirection != 0)
+            {
+                hud._gas -= Time.deltaTime * 10f;
+            }
+        }
+        else
+        {
+            Flip();
+        }
     }
 
     void Flip()
