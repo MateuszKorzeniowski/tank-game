@@ -24,29 +24,19 @@ public class CannonController : MonoBehaviour {
 
     private void Update()
     {
-
-        //sterowanie cannonem
-        directionCannon = Input.GetAxisRaw("Vertical");
-        if (directionCannon > 0f && angle < maxAngle)
-        {
-            angle += (speed * Time.deltaTime);
-        }
-        else if(directionCannon < 0f && angle > minAngle)
-        {
-            angle -= (speed * Time.deltaTime);
-        }
-
-        if (angle < minAngle) angle = minAngle;
-        if (angle > maxAngle) angle = maxAngle;
-
-        cannon.transform.rotation = Quaternion.Euler(0, 0, angle);
-
-        //jelsi patrzymy w lewo to od rotacji odejmujemy rotację 180 ze wzgledu na występowanie funkcji Flip w Tank Controller
         if(tank.isFacingRight==false)
         {
             cannon.transform.rotation = Quaternion.Euler(0, -180f, angle);
         }
 
+    }
+
+    public void SetAngleCannon(float _angle)
+    {
+        angle += _angle;
+        if (angle < minAngle) angle = minAngle;
+        if (angle > maxAngle) angle = maxAngle;
+        cannon.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
 
